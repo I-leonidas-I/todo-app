@@ -1,0 +1,22 @@
+{
+  "name": "todo-projeto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  "start": "node backend/server.js",
+  "test:backend": "cypress run --spec cypress/e2e/backend.cy.js",
+  "test:frontend": "cypress run --spec cypress/e2e/frontend.cy.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "cypress": "^15.16.0"
+  }
+}
