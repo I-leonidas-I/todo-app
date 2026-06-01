@@ -1,0 +1,36 @@
+name: Testes do Frontend
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Instalar servidor estático
+        run: npm install -g http-server
+
+      - name: Iniciar backend
+        run: node backend/server.js &
+
+      - name: Iniciar frontend
+        run: http-server frontend -p 5500 &
+
+      - name: Aguardar serviços iniciarem
+        run: sleep 8
+
+      - name: Rodar testes do frontend
+        run: npm run test:frontend
