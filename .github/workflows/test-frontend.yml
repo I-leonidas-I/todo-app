@@ -12,25 +12,14 @@ jobs:
       - name: Baixar código
         uses: actions/checkout@v4
 
-      - name: Instalar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Instalar dependências
-        run: npm install
-
-      - name: Instalar servidor estático
+      - name: Instalar http-server globalmente
         run: npm install -g http-server
 
-      - name: Iniciar backend em segundo plano
-        run: node backend/server.js &
-
-      - name: Iniciar frontend em segundo plano
-        run: http-server frontend -p 5500 &
-
-      - name: Aguardar serviços iniciarem
-        run: sleep 8
-
-      - name: Rodar testes do frontend
-        run: npx cypress run --spec cypress/e2e/frontend.cy.js
+      - name: Iniciar serviços e rodar testes
+        uses: cypress-io/github-action@v6
+        with:
+          spec: cypress/e2e/frontend.cy.js
+          start: |
+            node backend/server.js
+            http-server frontend -p 5500
+          wait-on: 'http://localhost:5500, http://localhost:3001/tasks'
