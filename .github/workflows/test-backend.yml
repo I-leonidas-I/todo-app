@@ -15,16 +15,16 @@ jobs:
       - name: Instalar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Instalar dependências
         run: npm install
 
-      - name: Iniciar backend
+      - name: Iniciar backend em segundo plano
         run: node backend/server.js &
 
       - name: Aguardar backend iniciar
         run: sleep 5
 
       - name: Rodar testes do backend
-        run: npm run test:backend
+        run: npx cypress run --spec cypress/e2e/backend.cy.js
